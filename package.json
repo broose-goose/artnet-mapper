@@ -1,0 +1,10 @@
+{
+  "name": "artnet-mapper",
+  "version": "0.1.0",
+  "description": "Create bitmaps / summaries of an artnet installon with some testing utils\"",
+  "main": "index.js",
+  "repository": "https://github.com/broose-goose/artnet-mapper",
+  "author": "broosegoose",
+  "license": "MIT",
+  "private": false
+}
