@@ -1,20 +1,16 @@
+<template>
+  <v-layout class="rounded rounded-md">
+    <v-app-bar title="Artnet Mapper" />
+    <v-main class="d-flex" style="min-height: 300px;">
+      Main content
+    </v-main>
+  </v-layout>
+</template>
+
 <script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
 
-window.electronAPI.sendMessage('Hello from App.vue!');
 </script>
-
-<template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Goose & Melissa" />
-</template>
 
 <style scoped>
 .logo {
