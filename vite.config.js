@@ -1,6 +1,6 @@
 const Path = require('path');
 const vuePlugin = require('@vitejs/plugin-vue');
-const vuetify = require('vite-plugin-vuetify');
+const vuetifyPlugin = require('vite-plugin-vuetify');
 
 const { defineConfig } = require('vite');
 
@@ -20,7 +20,7 @@ const config = defineConfig({
     },
     plugins: [
         vuePlugin(),
-        vuetify({ autoImport: true })
+        vuetifyPlugin({ autoImport: true })
     ],
 });
 

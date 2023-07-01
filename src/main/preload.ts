@@ -1,5 +1,6 @@
-import {contextBridge, ipcRenderer} from 'electron';
+import {contextBridge} from 'electron';
+import * as dgram from "dgram";
 
 contextBridge.exposeInMainWorld('electronAPI', {
-    sendMessage: (message: string) => ipcRenderer.send('message', message)
+    createSocket: dgram.createSocket
 })

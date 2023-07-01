@@ -39,9 +39,8 @@ function createWindow() {
         width: 800,
         height: 600,
         webPreferences: {
-            preload: (0, path_1.join)(__dirname, 'preload.js'),
-            nodeIntegration: false,
-            contextIsolation: true,
+            nodeIntegration: true,
+            contextIsolation: false,
         }
     });
     if (process.env.NODE_ENV === 'development') {

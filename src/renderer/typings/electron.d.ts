@@ -1,8 +1,10 @@
+import {Socket} from "node:dgram";
+
 /**
  * Should match main/preload.ts for typescript support in renderer
  */
 export default interface ElectronApi {
-    sendMessage: (message: string) => void
+    createSocket: (type: 'udp4' | 'udp6', callback?: Function) => Socket
 }
 
 declare global {
