@@ -10,7 +10,6 @@ export default createVuetify({
     theme: {
         defaultTheme: 'dark'
     },
-    blueprint: md3,
     icons: {
         defaultSet: 'fa',
         aliases,
