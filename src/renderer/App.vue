@@ -3,9 +3,10 @@ import {computed, ref} from "vue";
 import Installation from "./components/installation.vue";
 import InstallationSetupModal from "./components/installationSetupModal.vue";
 import {useAppStore} from "./store/app-store";
+import InstallationToolbar from "./components/installationToolbar.vue";
 
 const appStore = useAppStore()
-const installationSetupIsOpen = ref(false);
+const installationSetupIsOpen = ref(true);
 
 computed(() => appStore.installation)
 </script>
@@ -14,9 +15,8 @@ computed(() => appStore.installation)
   <v-layout class="rounded rounded-md wrapper">
     <v-app-bar title="Artnet Mapper" />
     <v-main class="d-flex">
-      <installation
-        @launch-setup="installationSetupIsOpen = true"
-      />
+      <installation />
+      <installation-toolbar />
     </v-main>
     <installation-setup-modal v-model:is-open="installationSetupIsOpen" />
   </v-layout>
