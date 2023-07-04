@@ -1,12 +1,4 @@
-
-export interface Pixel {
-    xPosition: number;
-    yPosition: number;
-    pixelType: number;
-    isActive: boolean;
-    universe?: number;
-    position?: number;
-}
+import {Pixel} from "./pixel";
 
 export interface Installation {
     width: number;

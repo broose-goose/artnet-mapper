@@ -1,7 +1,8 @@
 import {reactive, ref, Ref, shallowReactive} from 'vue'
-import {Installation, Pixel} from "../domain/installation";
+import {Installation} from "../domain/installation";
 import {defineStore} from "pinia";
 import {InstallationState} from "../domain/app";
+import {AssignmentDirection, AssignPixelsAndSummarize, GeneratePixels} from "../domain/pixels";
 
 export const useAppStore = defineStore('app', () => {
     // We declare the state using reactive to make sure the object is reactive
@@ -43,19 +44,8 @@ export const useAppStore = defineStore('app', () => {
         artnet.universeCounts = {};
         artnet.universeMap = {};
         artnet.universeData = [];
-        const pixels: Array<Pixel> = [];
-        /* setup pixels */
-        for (let y = height - 1; y >= 0; y--) {
-            for (let x = 0; x < width; x++) {
-                pixels.push({
-                    xPosition: x,
-                    yPosition: y,
-                    pixelType: 0,
-                    isActive: false
-                })
-            }
-        }
-        installation.pixels = pixels;
+
+        installation.pixels = GeneratePixels(width, height);
     };
 
     const togglePixel = (pixelNumber: number) => {
@@ -64,11 +54,22 @@ export const useAppStore = defineStore('app', () => {
         // need to update universe position as well
     }
 
+    const assignPixels = (
+        pixelNumber: number, direction: AssignmentDirection, requestedCount: number,
+        universe: number, position: number, omitPixelTypes: Array<number>
+    ) => {
+        AssignPixelsAndSummarize(
+            installation, pixelNumber, direction, requestedCount, universe, position, omitPixelTypes
+        );
+        // need to update artnet as well
+    }
+
     // We expose the state and functions to the components that will use this store.
     return {
         installation, artnet, state,
         setInstallationState,
         setupInstallation,
-        togglePixel
+        togglePixel,
+        assignPixels
     };
 })

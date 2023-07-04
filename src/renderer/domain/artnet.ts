@@ -11,3 +11,5 @@ interface Artnet {
     universeMap: {[key: number]: number};
     universeData: Array<Buffer>;
 }
+
+type UniverseSummary = Record<number, { min: number, max: number }>

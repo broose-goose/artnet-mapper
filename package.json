@@ -30,14 +30,17 @@
   },
   "dependencies": {
     "@types/node": "^20.3.3",
+    "amator": "^1.1.0",
     "buffer": "^6.0.3",
     "dgram": "^1.0.1",
+    "ngraph.events": "^1.2.2",
     "panzoom": "^9.4.3",
     "pinia": "^2.1.4",
     "sass": "^1.63.6",
     "vite-plugin-electron": "^0.12.0",
     "vite-plugin-vuetify": "^1.0.2",
     "vue": "^3.2.47",
-    "vuetify": "^3.3.6"
+    "vuetify": "^3.3.6",
+    "wheel": "^1.0.0"
   }
 }

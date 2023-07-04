@@ -1,16 +1,12 @@
 <script setup lang="ts">
 import {computed, onMounted, PropType, toRefs, ref, Ref} from "vue";
-import * as panzoom from "panzoom";
-import panZoom from 'panzoom';
+import * as panzoom from 'panzoom'
+import panZoom from '../plugins/panzoom'
 
 const props = defineProps({
   options: {
     type: Object as PropType<panzoom.PanZoomOptions>,
     default: () => {}
-  },
-  isPaused: {
-    type: Boolean,
-    required: true
   }
 });
 const { options } = toRefs(props);

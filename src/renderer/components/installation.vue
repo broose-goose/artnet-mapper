@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import {computed} from "vue";
+import {computed, ref, Ref, watch} from "vue";
 
 import {useAppStore} from "../store/app-store";
 import Panzoom from "./panzoom.vue";
 import {InstallationState} from "../domain/app";
+import AssigningModal from "./assigningModal.vue";
 
 /* state */
+const assigningModalIsOpen = ref(false);
+
+
 const store = useAppStore()
 const installationStore = store.installation;
 const width = computed(() => installationStore.width);
@@ -20,10 +24,17 @@ const gridStyleString = computed(() => `
 `)
 const canRender = computed(() => width.value !== -1 && height.value !== -1);
 
+let selectedPixel: Ref<number> = ref(-1);
+
+watch(state, () => {
+  selectedPixel.value = -1;
+})
 
 function PixelClick(event: Event, pixelNumber: number) {
   if (state.value === InstallationState.Toggling) {
     store.togglePixel(pixelNumber);
+  } else if (state.value !== InstallationState.Moving) {
+    selectedPixel.value = pixelNumber;
   }
 }
 
@@ -49,13 +60,15 @@ function PixelLeave(pixelNumber: number) {
         }"
         :style="gridStyleString"
       >
-        <template v-for="(pixel, pixelNumber) in pixels">
+        <template v-for="(pixel, pixelNumber) in pixels" :key="pixelNumber">
             <div
                 class="pixel"
                 :class="[
                     `type-${pixel.pixelType}`,
-                    { 'is-active': pixel.isActive }
+                    { 'is-active': pixel.isActive },
+                    { 'selected': pixelNumber === selectedPixel }
                 ]"
+                :id="`pixel-${pixelNumber}`"
                 @click="PixelClick($event, pixelNumber)"
                 @mouseenter="PixelHover($event, pixelNumber)"
                 @mouseleave="PixelLeave(pixelNumber)"
@@ -64,6 +77,13 @@ function PixelLeave(pixelNumber: number) {
             </div>
         </template>
       </div>
+      <template v-if="state === InstallationState.Assigning">
+        <assigning-modal
+            :is-open="selectedPixel !== -1"
+            :pixel-number="selectedPixel"
+            @close="selectedPixel = -1"
+        />
+      </template>
     </template>
   </panzoom>
 </template>
@@ -75,7 +95,13 @@ function PixelLeave(pixelNumber: number) {
 .pixel-grid.pixel-pointer > .pixel {
   cursor: pointer;
 }
+.pixel-menu {
+  position: absolute;
+  z-index: 99;
+  bottom: 0;
+}
 .pixel {
+  position:relative;
   display: inline-block;
   border: 1px solid;
   height: 48px;
@@ -87,7 +113,7 @@ function PixelLeave(pixelNumber: number) {
     &:hover {
       background: rgba(#00BCD4, 0.25);
     }
-    &:active {
+    &:active, &.selected {
       background: rgba(#00BCD4, 0.5);
     }
     &.is-active {
@@ -104,7 +130,7 @@ function PixelLeave(pixelNumber: number) {
     &:hover {
       background: rgba(#4CAF50, 0.25);
     }
-    &:active {
+    &:active, &.selected {
       background: rgba(#4CAF50, 0.5);
     }
     &.is-active {
@@ -121,7 +147,7 @@ function PixelLeave(pixelNumber: number) {
     &:hover {
       background: rgba(#673AB7, 0.25);
     }
-    &:active {
+    &:active, &.selected {
       background: rgba(#673AB7, 0.5);
     }
     &.is-active {
